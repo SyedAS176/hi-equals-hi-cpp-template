@@ -3,5 +3,6 @@
 #include "src/hello.hpp"
 
 int main() {
-  // Your driver program goes here
+  std::cout << hello() << std::endl;
+  std::cout << string_compare("hello", "world") << std::endl;
 }

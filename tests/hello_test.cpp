@@ -5,6 +5,8 @@
 
 #include "../src/hello.hpp"
 
-TEST_CASE( "it returns Hello World" ) {
-    REQUIRE( hello() == "Hello World!" );
+TEST_CASE( "tests for string compare" ) {
+    REQUIRE( string_compare("", "") == -1 );
+    REQUIRE( string_compare("hello", "world") == -1 );
+    REQUIRE( string_compare("ABC", "abc") == -1);
 }
