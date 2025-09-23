@@ -6,7 +6,7 @@
 #include "../src/hello.hpp"
 
 TEST_CASE( "tests for string compare" ) {
-    REQUIRE( string_compare("", "") == -1 );
-    REQUIRE( string_compare("hello", "world") == -1 );
-    REQUIRE( string_compare("ABC", "abc") == -1);
+    REQUIRE( strcmp_case_insensitive("", "") == 0 );
+    REQUIRE( strcmp_case_insensitive("hello", "world") == -1 );
+    REQUIRE( strcmp_case_insensitive("ABC", "abc") == 0);
 }

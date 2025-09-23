@@ -1,4 +1,4 @@
 #include <string>
 
 std::string hello();
-int string_compare(std::string s1, std::string s2);
+int strcmp_case_insensitive (std::string s1, std::string s2);
