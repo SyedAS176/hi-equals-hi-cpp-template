@@ -21,3 +21,12 @@ TEST_CASE( "tests for strings with spaces" ) {
     REQUIRE( strcmp_case_insensitive("apple pie", "apple", true) == 1 );
     REQUIRE( strcmp_case_insensitive("apple", "apple pie", true) == -1 );
 }
+
+TEST_CASE( "tests for max length" ) {
+    REQUIRE( strcmp_case_insensitive("beans", "beans", 4) == 0 );
+    REQUIRE( strcmp_case_insensitive("beans", "beans cool", 4) == 0 );
+    REQUIRE( strcmp_case_insensitive("apple", "banana", 10) == -1 );
+    REQUIRE( strcmp_case_insensitive("cool rocks", "cool rocks", 4) == 0 );
+    REQUIRE( strcmp_case_insensitive("apple pie", "banana bread", 5) == -1 );
+    REQUIRE( strcmp_case_insensitive("apple pie", "banana pie", 5) == 1 );
+}
