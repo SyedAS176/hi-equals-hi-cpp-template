@@ -24,9 +24,22 @@ TEST_CASE( "tests for strings with spaces" ) {
 
 TEST_CASE( "tests for max length" ) {
     REQUIRE( strcmp_case_insensitive("beans", "beans", 4) == 0 );
-    REQUIRE( strcmp_case_insensitive("beans", "beans cool", 4) == 0 );
+    REQUIRE( strcmp_case_insensitive("beans", "beans cool", 4) == -1 );
     REQUIRE( strcmp_case_insensitive("apple", "banana", 10) == -1 );
     REQUIRE( strcmp_case_insensitive("cool rocks", "cool rocks", 4) == 0 );
     REQUIRE( strcmp_case_insensitive("apple pie", "banana bread", 5) == -1 );
-    REQUIRE( strcmp_case_insensitive("apple pie", "banana pie", 5) == 1 );
+    REQUIRE( strcmp_case_insensitive("apple pie", "banana pie", 5) == -1 );
+}
+
+TEST_CASE( "tests for strings with numbers" ) {
+    REQUIRE( strcmp_case_insensitive("abc123", "abc124") == -1 );
+    REQUIRE( strcmp_case_insensitive("abc124", "abc123") == 1 );
+    REQUIRE( strcmp_case_insensitive("abc10", "abc9") == 1 );
+    REQUIRE( strcmp_case_insensitive("abc9", "abc10") == -1 );
+    REQUIRE( strcmp_case_insensitive("abc99", "abc099") == 0 );
+    REQUIRE( strcmp_case_insensitive("123abc", "124abc") == -1 );
+    REQUIRE( strcmp_case_insensitive("abc123def", "abc124def") == -1 );
+    REQUIRE( strcmp_case_insensitive("abc124def", "abc123def") == 1 );
+    REQUIRE( strcmp_case_insensitive("abc123", "abc123") == 0 );
+    REQUIRE( strcmp_case_insensitive("a123b", "A123B") == 0 );
 }

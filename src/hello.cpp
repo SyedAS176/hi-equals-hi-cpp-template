@@ -37,30 +37,40 @@ int strcmp_case_insensitive (string s1, string s2, bool skip_spaces = false, int
          }
       }
 
-      // Force to case-insensitive comparison
-      char c1 = tolower(s1[i]);
-      char c2 = tolower(s2[j]);
+      //Check if both characters are digits; this is the start of number comparison in each string; only runs if characters in the string are digits
+        if (isdigit(s1[i]) && isdigit(s2[j])) {
+            int start_i = i; //Extract the number from s1
+            while (i < max_len_s1 && isdigit(s1[i])) i++;
+            int num1 = stoi(s1.substr(start_i, i - start_i));
 
-      if (c1 == c2) { //Continue looping over the strings
-         i++;
-         j++;
-      } else if (c1 < c2) {
-         return -1;
-      } else {
-         return 1;
+            int start_j = j; //Extract the number from s2
+            while (j < max_len_s2 && isdigit(s2[j])) j++;
+            int num2 = stoi(s2.substr(start_j, j - start_j));
+
+            //Compare the extracted numbers from the strings to each other
+            if (num1 < num2) return -1; //We extract the whole number to avoid a false case of 10 < 9 which is not true
+            if (num1 > num2) return 1; //Ex: 10 < 9 would be true if we compared individual digits
+      } else { //Force to case-insensitive comparison; this runs assuming the previous code block did not find any numbers in the strings
+
+         char c1 = tolower(s1[i]);
+         char c2 = tolower(s2[j]);
+
+         if (c1 == c2) { //Continue looping over the strings
+            i++;
+            j++;
+         } else if (c1 < c2) {
+            return -1;
+         } else {
+            return 1;
+         }
       }
    } //While loop ends here
 
-   // Handle max_length condition (after comparison)
-   if (max_length != -1) {
-      // Limit the length of comparison to the max_length if provided
+   if (max_length != -1) { //Limit the length of comparison to the max_length if provided
       if (i < max_length && j < max_length) {
-         return (i == j) ? 0 : (i < j ? 1 : -1);
+         return (i == j) ? 0 : (i < j ? 1 : -1); //This notation avoid a headache of if-else statements, I used it above for max_lengths too
       }
    }
-
-   //After the loop: check string lengths since the function will only
-   //Run these lines if the strings have been equal thus far
 
    if (skip_spaces) { //Ensures trailing spaces don’t make two otherwise equal strings compare as different lengths
       while (i < max_len_s1 && s1[i] == ' ') { //Skips spaces in s1
@@ -71,11 +81,13 @@ int strcmp_case_insensitive (string s1, string s2, bool skip_spaces = false, int
       }
    }
 
-   if (i == max_len_s1 && j == max_len_s2) { //Both strings are of equal length
-      return 0;
-   } else if (i < max_len_s1) { //s1 has leftover characters; it is longer than s2
-      return 1;
-   } else { //s2 has leftover characters; it is longer than s1
-      return -1;
+   //After the loop and skip spaces check: check string lengths since the function will only
+   //Run these lines if the strings have been equal thus far
+   if (i == max_len_s1 && j == max_len_s2) {
+      return 0; //Both strings are of equal length
+   } else if (i < max_len_s1) {
+      return 1; //s1 has leftover characters; it is longer than s2
+   } else {
+      return -1; //s2 has leftover characters; it is longer than s1
    }
 }//End of strcmp_case_insensitive(string s1, string s2)
